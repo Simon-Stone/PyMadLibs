@@ -1,7 +1,7 @@
 from collections import Counter
 from pathlib import Path
 import re
-from typing import Dict, List, Tuple, Union
+from typing import Tuple, Union
 from typing import Counter as CounterType
 
 
@@ -39,7 +39,6 @@ class Game:
         self.count_of_categories = None
         self.current_round = None
         self.folder = Path(madlibs_folder)
-        self.choose_madlib_and_play()
 
     def choose_madlib(self):
         inventory = list(self.folder.glob('*.madlibs'))
@@ -57,6 +56,8 @@ class Game:
         """
         Play rounds of Mad Libs until the user ends the game
         """
+        if not self.text:
+            self.choose_madlib()
         Round(self.text, self.count_of_categories).play()
         self.show_menu()
 
@@ -65,7 +66,7 @@ class Game:
         print("(1) Yes!")
         print("(2) Choose a different Mad Lib")
         print("(3) Quit game")
-        choice = int(input())
+        choice = int(input("> "))
         choices = {1: self.play, 2: self.choose_madlib_and_play, 3: self.quit}
         choices[choice]()
 
