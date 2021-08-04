@@ -45,9 +45,54 @@ def get_user_input(categories: CounterType[str]) -> Dict[str, List[str]]:
             words[category].append(input(prompt_string + sanitize_category_name(category) + ": ").strip().lower())
         else:
             words[category] = [input(prompt_string + sanitize_category_name(category) + ": ").strip().lower()]
+    print("Thank you!")
     return words
+
+
+def fill_in_words(madlibs: str, words: Dict[str, List[str]]) -> str:
+    """
+    Fill in the gaps of a string in Mad Libs format using the provided words.
+    :param madlibs:
+    :param words:
+    :return: The text with the words filled in
+    """
+    try:
+        for category, word_list in words.items():
+            while word_list:
+                madlibs, gap_found = re.subn(fr"{{{category}}}", word_list[0], madlibs, count=1)
+                if not gap_found:
+                    raise ValueError
+                word_list.pop(0)
+    except ValueError:
+        print("Error: Cannot find enough gaps to fill in all the supplied words!")
+        return ""
+
+    """ Check if all gaps have been filled """
+    if re.search(r"{.**}", madlibs, flags=re.MULTILINE):
+        print("Error: Could not find enough words to fill every gap!")
+        return ""
+
+    return madlibs
+
+
+def print_text(text: str):
+    print("And here is the whole story: \n\n")
+    print(text)
+    print("\n\nThank you for playing Mad Libs!")
+
+
+def play_madlibs():
+    text, categories = read_madlibs_file('Stories/TheZoo.madlibs')
+    words = get_user_input(categories)
+    print_text(fill_in_words(text, words))
 
 
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+    play_madlibs()
+
+
+
+
+
