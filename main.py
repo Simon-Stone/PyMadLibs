@@ -5,6 +5,10 @@ from typing import Tuple, Union
 from typing import Counter as CounterType
 
 
+# **********************************************************************************************************************
+# **********************************************************************************************************************
+
+
 class MadLibsFile:
     """ A class to interact with .madlibs files """
     def __init__(self):
@@ -26,6 +30,10 @@ class MadLibsFile:
         """ Read a .madlibs file and return its parsed content """
         with open(path, 'r') as mlf:
             return MadLibsFile.parse(mlf.read())
+
+
+# **********************************************************************************************************************
+# **********************************************************************************************************************
 
 
 class Game:
@@ -76,6 +84,10 @@ class Game:
         quit()
 
 
+# **********************************************************************************************************************
+# **********************************************************************************************************************
+
+
 class Round:
     """ A round of Mad Libs """
     def __init__(self, text, count_of_categories):
@@ -123,7 +135,7 @@ class Round:
     def print_madlib(self):
         """ Print the string with the words filled in """
         print("And here is the whole story: \n\n")
-        print(self.text)
+        print(sentence for sentence in self.text.split(".").strip())
         print("\n\n")
 
     def play(self):
@@ -131,6 +143,9 @@ class Round:
         self.get_user_input()
         self.fill_in_words()
         self.print_madlib()
+
+# **********************************************************************************************************************
+# **********************************************************************************************************************
 
 
 if __name__ == '__main__':
