@@ -68,7 +68,7 @@ def fill_in_words(madlibs: str, words: Dict[str, List[str]]) -> str:
         return ""
 
     """ Check if all gaps have been filled """
-    if re.search(r"{.**}", madlibs, flags=re.MULTILINE):
+    if re.search(r"{.*}", madlibs, flags=re.MULTILINE):
         print("Error: Could not find enough words to fill every gap!")
         return ""
 
@@ -91,8 +91,3 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
     play_madlibs()
-
-
-
-
-
